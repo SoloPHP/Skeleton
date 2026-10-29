@@ -11,6 +11,10 @@
       "email": "vedastudio@gmail.com"
     }
   ],
+  "support": {
+    "issues": "https://github.com/SoloPHP/Skeleton/issues",
+    "source": "https://github.com/SoloPHP/Skeleton"
+  },
   "require": {
     "php": "^8.4",
     "doctrine/dbal": "^4.5",

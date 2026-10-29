@@ -1,0 +1,7 @@
+# Distribution archives carry what an application needs, not what an editor or a CI run does
+/.github export-ignore
+/.idea export-ignore
+/.vscode export-ignore
+/.phpunit.cache export-ignore
+/.gitattributes export-ignore
+.DS_Store export-ignore

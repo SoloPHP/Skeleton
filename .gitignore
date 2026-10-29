@@ -2,3 +2,6 @@
 /.env
 /.env.local
 /.phpunit.cache/
+/.idea/
+/.vscode/
+.DS_Store
