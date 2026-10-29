@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Casters;
+namespace App\Input\Casters;
 
 use Solo\Input\Contracts\CasterInterface;
 use Solo\Input\ProcessContext;

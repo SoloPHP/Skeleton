@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Task;
+namespace App\Modules\Task;
 
-use App\Http\Exceptions\NotFoundException;
 use App\Http\JsonResponse;
-use App\Task\Inputs\TaskIndexInput;
-use App\Task\Inputs\TaskStoreInput;
-use App\Task\Inputs\TaskUpdateInput;
+use App\Support\Records;
+use App\Modules\Task\Inputs\TaskIndexInput;
+use App\Modules\Task\Inputs\TaskStoreInput;
+use App\Modules\Task\Inputs\TaskUpdateInput;
+use App\Modules\Task\Models\Task;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Solo\Input\InputFactory;
@@ -34,7 +35,9 @@ final readonly class TaskController
     public function index(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $input = $this->inputs->fromQuery(TaskIndexInput::class, $request);
-        $criteria = $input->criteria();
+
+        /** @var array<string, mixed> $criteria */
+        $criteria = Inputs::group($input, 'criteria');
 
         $tasks = $this->tasks->read()->findBy(
             $criteria,
@@ -50,6 +53,12 @@ final readonly class TaskController
             $input->per_page,
             $this->tasks->read()->count($criteria),
         );
+    }
+
+    /** The input contract of POST /tasks, as JSON */
+    public function schema(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        return JsonResponse::data($response, $this->inputs->schema(TaskStoreInput::class));
     }
 
     /** @param array{id: string} $params */
@@ -77,11 +86,11 @@ final readonly class TaskController
         ResponseInterface $response,
         array $params,
     ): ResponseInterface {
-        $task = $this->find($params['id']);
-        $input = $this->inputs->fromBody(TaskUpdateInput::class, $request);
+        // The route parameters go to the input, which reads its id from them
+        $input = $this->inputs->fromBody(TaskUpdateInput::class, $request, route: $params);
 
         // A partial input gives only the fields the client sent
-        $task = $this->tasks->change($task, Inputs::toArray($input));
+        $task = $this->tasks->change($this->find($input->id), Inputs::toArray($input));
 
         return JsonResponse::data($response, TaskResource::make($task));
     }
@@ -97,8 +106,8 @@ final readonly class TaskController
         return $response->withStatus(204);
     }
 
-    private function find(string $id): Task
+    private function find(int|string $id): Task
     {
-        return $this->tasks->read()->find((int) $id) ?? throw new NotFoundException();
+        return Records::findOrFail($this->tasks, $id);
     }
 }

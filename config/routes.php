@@ -7,8 +7,8 @@ declare(strict_types=1);
  * and adding a module means adding one line here.
  */
 
-use App\Home\HomeController;
-use App\Task\TaskRoutes;
+use App\Modules\Home\HomeController;
+use App\Modules\Task\TaskRoutes;
 use Solo\Router\RouteCollector;
 
 return function (RouteCollector $r): void {
