@@ -17,6 +17,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Archives are named `app.log.<time>.<n>` instead of `app_<time>.log`; old archives are left alone, so
   delete them yourself.
 - An unknown `LOG_LEVEL`, such as `WARNING` in capitals, throws instead of being accepted.
+- solophp/repository 1.3. `GET /tasks` reads its page with `ReadQuery::page()`: the id ends the
+  requested order, so tasks created in the same second keep their place across pages, and a page
+  shorter than its size gives the total without a `COUNT`. `JsonResponse::page()` takes the `Page`,
+  and `TaskResource::collection()` is gone; the response is unchanged.
 
 ## [1.1.0] - 2026-10-29
 

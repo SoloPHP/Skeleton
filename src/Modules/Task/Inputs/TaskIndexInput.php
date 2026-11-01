@@ -22,7 +22,7 @@ use Solo\Input\Attributes\Validate;
  * #[EmptyToNull] reads a blank string as null, and a blank bool is null anyway.
  *
  * #[Group('criteria')] makes the fields the criteria of a repository read:
- * Inputs::group() gives them as the keys `findBy()` takes, and a field left
+ * Inputs::group() gives them as the keys `page()` takes, and a field left
  * null is not in the group, so it narrows nothing.
  */
 #[Input]

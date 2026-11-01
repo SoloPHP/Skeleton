@@ -37,13 +37,4 @@ final class TaskResource
             'updated_at' => $task->updatedAt->format(DateTimeInterface::ATOM),
         ];
     }
-
-    /**
-     * @param list<Task> $tasks
-     * @return list<TaskArray>
-     */
-    public static function collection(array $tasks): array
-    {
-        return array_map(self::make(...), $tasks);
-    }
 }

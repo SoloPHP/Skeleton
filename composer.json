@@ -27,7 +27,7 @@
     "solophp/http-emitter": "^1.0",
     "solophp/input": "^1.1",
     "solophp/logger": "^2.0",
-    "solophp/repository": "^1.1",
+    "solophp/repository": "^1.3",
     "solophp/router": "^4.1",
     "solophp/validator": "^4.2"
   },

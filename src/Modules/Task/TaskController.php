@@ -14,6 +14,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Solo\Input\InputFactory;
 use Solo\Input\Inputs;
+use Solo\Repository\PageRequest;
 use Solo\Router\UrlGenerator;
 
 /**
@@ -39,20 +40,11 @@ final readonly class TaskController
         /** @var array<string, mixed> $criteria */
         $criteria = Inputs::group($input, 'criteria');
 
-        $tasks = $this->tasks->read()->findBy(
-            $criteria,
-            $input->sort,
-            limit: $input->per_page,
-            offset: ($input->page - 1) * $input->per_page,
-        );
+        // The id ends the requested order, so tasks created in the same second keep their
+        // pages, and a page shorter than its size gives the total without counting.
+        $tasks = $this->tasks->read()->page(new PageRequest($input->page, $input->per_page, $input->sort), $criteria);
 
-        return JsonResponse::page(
-            $response,
-            TaskResource::collection($tasks),
-            $input->page,
-            $input->per_page,
-            $this->tasks->read()->count($criteria),
-        );
+        return JsonResponse::page($response, $tasks->map(TaskResource::make(...)));
     }
 
     /** The input contract of POST /tasks, as JSON */

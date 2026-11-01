@@ -102,7 +102,7 @@ Errors are thrown, never built by hand. `ErrorMiddleware` maps them to responses
 
 ## Filtering a list
 
-`GET /tasks` narrows by the fields `TaskIndexInput` groups: `#[Group('criteria')]` makes them the criteria of a repository read, and `Inputs::group($input, 'criteria')` is what the controller passes to `findBy()`.
+`GET /tasks` narrows by the fields `TaskIndexInput` groups: `#[Group('criteria')]` makes them the criteria of a repository read, and `Inputs::group($input, 'criteria')` is what the controller passes to `page()`.
 
 ```php
 #[Caster(ContainsCaster::class)]

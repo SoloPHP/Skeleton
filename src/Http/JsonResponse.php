@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http;
 
 use Psr\Http\Message\ResponseInterface;
+use Solo\Repository\Page;
 
 /**
  * JSON bodies in the one shape every endpoint answers with:
@@ -30,20 +31,17 @@ final class JsonResponse
         return self::write($response, $meta === [] ? ['data' => $data] : ['data' => $data, 'meta' => $meta], $status);
     }
 
-    /** @param list<mixed> $items */
-    public static function page(
-        ResponseInterface $response,
-        array $items,
-        int $page,
-        int $perPage,
-        int $total,
-    ): ResponseInterface {
-        return self::data($response, $items, meta: [
+    /** @param Page<mixed> $page */
+    public static function page(ResponseInterface $response, Page $page): ResponseInterface
+    {
+        $perPage = $page->request->perPage;
+
+        return self::data($response, $page->items, meta: [
             'pagination' => [
-                'page' => $page,
+                'page' => $page->request->page,
                 'per_page' => $perPage,
-                'total' => $total,
-                'pages' => max(1, (int) ceil($total / $perPage)),
+                'total' => $page->total,
+                'pages' => max(1, (int) ceil($page->total / $perPage)),
             ],
         ]);
     }

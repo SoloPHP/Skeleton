@@ -180,6 +180,22 @@ final class TaskTest extends TestCase
         self::assertSame(['page' => 2, 'per_page' => 1, 'total' => 2, 'pages' => 2], $meta['pagination'] ?? null);
     }
 
+    public function testPagesKeepTasksOfOneSecondInOrder(): void
+    {
+        // Created within one second as often as not: the id ends the order, so the
+        // tie falls the same way on every page, in the direction of the sort.
+        foreach (['First', 'Second', 'Third'] as $title) {
+            $this->createTask($title);
+        }
+        $read = fn(string $sort): array => array_merge(...array_map(
+            fn(int $page): array => $this->titles($this->request('GET', "/tasks?sort=$sort&per_page=1&page=$page")),
+            [1, 2, 3],
+        ));
+
+        self::assertSame(['First', 'Second', 'Third'], $read('created_at'));
+        self::assertSame(['Third', 'Second', 'First'], $read('-created_at'));
+    }
+
     public function testSearchMatchesPartOfTheTitle(): void
     {
         $this->createTask('Write the docs');
