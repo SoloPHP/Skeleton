@@ -197,7 +197,7 @@ composer check   # all three
 
 ## More Solo packages
 
-Add them when the application needs them: [Event-Dispatcher](https://github.com/SoloPHP/Event-Dispatcher), [Cache](https://github.com/SoloPHP/Cache), [Job-Queue](https://github.com/SoloPHP/Job-Queue), [HTTP-Client](https://github.com/SoloPHP/HTTP-Client), [Session](https://github.com/SoloPHP/Session), [Inertia](https://github.com/SoloPHP/Inertia). Each one gets a provider in `src/Providers/` and a line in `config/providers.php`.
+Add them when the application needs them: [Event-Dispatcher](https://solophp.github.io/Event-Dispatcher/), [Cache](https://github.com/SoloPHP/Cache), [Job-Queue](https://solophp.github.io/Job-Queue/), [HTTP-Client](https://solophp.github.io/HTTP-Client/), [Session](https://github.com/SoloPHP/Session), [Inertia](https://solophp.github.io/Inertia/). Each one gets a provider in `src/Providers/` and a line in `config/providers.php`.
 
 ## License
 
