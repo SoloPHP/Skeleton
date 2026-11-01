@@ -5,7 +5,7 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.2.0] - 2026-11-01
 
 ### Changed
 
@@ -21,6 +21,13 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   requested order, so tasks created in the same second keep their place across pages, and a page
   shorter than its size gives the total without a `COUNT`. `JsonResponse::page()` takes the `Page`,
   and `TaskResource::collection()` is gone; the response is unchanged.
+
+### Upgrading from 1.1.0
+
+- `create-project` gives the new version. An existing copy needs `"solophp/logger": "^2.0"` and
+  `"solophp/repository": "^1.3"` in `composer.json` and `LoggingServiceProvider` from this release.
+- A controller that pages a list calls `ReadQuery::page()` and passes `JsonResponse::page()` the
+  `Page`, mapped by its resource, in place of `findBy()` with an offset and a separate `count()`.
 
 ## [1.1.0] - 2026-10-29
 
