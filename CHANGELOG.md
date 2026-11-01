@@ -5,6 +5,19 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- solophp/dotenv 2.0. `bootstrap/app.php` loads `.env` and `.env.local` as before, but a malformed line,
+  such as one without `=` or with an unterminated quote, now stops the boot with the file and the line
+  instead of being skipped, and nothing from either file is applied.
+- Variables set by the server or the shell override both files whatever `variables_order` says, and
+  `HTTP_*` request headers never count as configuration.
+- A `#` starts a comment only after a space or a tab, and double quotes decode `\n`, `\t` and `\"`, so
+  a Windows path belongs in single quotes. `DB_PORT` must be a decimal integer: `3306.0` falls back to
+  the default port.
+
 ## [1.2.0] - 2026-11-01
 
 ### Changed

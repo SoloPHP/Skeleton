@@ -40,7 +40,7 @@ curl -X DELETE http://127.0.0.1:8000/tasks/1
 | [solophp/router](https://solophp.github.io/Router/) | Routes, groups, parameter patterns such as `{id:[1-9][0-9]*}`, middleware attached to a route; `UrlGenerator` builds a path from a route's name | `config/routes.php`, `src/Modules/Task/` |
 | [solophp/container](https://solophp.github.io/Container/) | PSR-11 container with autowiring; to PHPStan, `get(Foo::class)` is a `Foo` | `src/Providers/` |
 | [solophp/http-emitter](https://github.com/SoloPHP/HTTP-Emitter) | Sends the PSR-7 response | `HttpServiceProvider` |
-| [solophp/dotenv](https://github.com/SoloPHP/Dotenv) | `.env` files and typed access to variables | `bootstrap/app.php`, providers |
+| [solophp/dotenv](https://solophp.github.io/Dotenv/) | Strict `.env` files: a malformed line stops the boot with its file and line, variables set by the server win over the files, and typed accessors read the values | `bootstrap/app.php`, providers |
 | [solophp/input](https://solophp.github.io/Input/) | Typed, immutable request DTOs built from attributes: a field sent blank has no value, `#[Normalize]` / `#[Caster]` / `#[PostProcess]` change the value at the three stages of reading it, `#[Items]` builds a list of nested DTOs, `#[Generator]` a value the client never sends, `#[Group]` collects the fields a read filters by; `schema()` prints the contract | `src/Modules/Task/Inputs/`, `src/Input/`, `GET /tasks/schema` |
 | [solophp/validator](https://solophp.github.io/Validator/) | The rules behind `#[Validate]`; `unique` is the application's own rule, registered in `InputServiceProvider` | `src/Validation/` |
 | [solophp/repository](https://solophp.github.io/Repository/) | Typed table repositories over Doctrine DBAL; `Like` makes search text match literally, and criteria are `'column op' => value` keys | `src/Modules/Task/TaskRepository.php`, `src/Modules/Task/Inputs/TaskIndexInput.php` |
@@ -177,7 +177,7 @@ Take `src/Modules/Task` as the template:
 | `DB_PATH` | `storage/database/app.sqlite` | SQLite only; `:memory:` for an in-memory database |
 | `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD` | | MySQL and PostgreSQL |
 
-`.env.local` overrides `.env`. Variables set by the server or the shell override both.
+`.env.local` overrides `.env`. Variables set by the server or the shell override both. A malformed line in either file stops the boot with the file and the line.
 
 ## Tests and checks
 

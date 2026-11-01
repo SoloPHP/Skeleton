@@ -23,7 +23,7 @@
     "solophp/application": "^4.0.1",
     "solophp/container": "^4.0",
     "solophp/contracts": "^1.8",
-    "solophp/dotenv": "^1.0",
+    "solophp/dotenv": "^2.0",
     "solophp/http-emitter": "^1.0",
     "solophp/input": "^1.1",
     "solophp/logger": "^2.0",
