@@ -44,7 +44,7 @@ curl -X DELETE http://127.0.0.1:8000/tasks/1
 | [solophp/input](https://solophp.github.io/Input/) | Typed, immutable request DTOs built from attributes: a field sent blank has no value, `#[Normalize]` / `#[Caster]` / `#[PostProcess]` change the value at the three stages of reading it, `#[Items]` builds a list of nested DTOs, `#[Generator]` a value the client never sends, `#[Group]` collects the fields a read filters by; `schema()` prints the contract | `src/Modules/Task/Inputs/`, `src/Input/`, `GET /tasks/schema` |
 | [solophp/validator](https://solophp.github.io/Validator/) | The rules behind `#[Validate]`; `unique` is the application's own rule, registered in `InputServiceProvider` | `src/Validation/` |
 | [solophp/repository](https://solophp.github.io/Repository/) | Typed table repositories over Doctrine DBAL; `Like` makes search text match literally, and criteria are `'column op' => value` keys | `src/Modules/Task/TaskRepository.php`, `src/Modules/Task/Inputs/TaskIndexInput.php` |
-| [solophp/logger](https://github.com/SoloPHP/Logger) | PSR-3 file logger with rotation | `LoggingServiceProvider` |
+| [solophp/logger](https://solophp.github.io/Logger/) | PSR-3 logger: one rotated file that every process shares, a line per record with its context as JSON | `LoggingServiceProvider` |
 | [solophp/contracts](https://github.com/SoloPHP/Contracts) | The interfaces the packages share | providers |
 
 [Nyholm PSR-7](https://github.com/Nyholm/psr7) is the HTTP message implementation. Only `HttpServiceProvider` refers to it: the rest of the code sees PSR interfaces.
@@ -170,9 +170,9 @@ Take `src/Modules/Task` as the template:
 |---|---|---|
 | `APP_ENV` | `production` | `production` caches the routes in `storage/cache/routes.php` |
 | `APP_DEBUG` | `false` | exception details in 500 responses |
-| `APP_TIMEZONE` | `UTC` | |
+| `APP_TIMEZONE` | `UTC` | also the time of log records |
 | `LOG_FILE` | `storage/logs/app.log` | relative to the project root |
-| `LOG_LEVEL` | `warning` | PSR-3 level |
+| `LOG_LEVEL` | `warning` | one of the eight PSR-3 levels, in lowercase; another value throws |
 | `DB_DRIVER` | `pdo_sqlite` | `pdo_sqlite`, `pdo_mysql` or `pdo_pgsql` |
 | `DB_PATH` | `storage/database/app.sqlite` | SQLite only; `:memory:` for an in-memory database |
 | `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD` | | MySQL and PostgreSQL |

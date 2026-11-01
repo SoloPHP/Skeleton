@@ -26,7 +26,7 @@
     "solophp/dotenv": "^1.0",
     "solophp/http-emitter": "^1.0",
     "solophp/input": "^1.1",
-    "solophp/logger": "^1.0",
+    "solophp/logger": "^2.0",
     "solophp/repository": "^1.1",
     "solophp/router": "^4.1",
     "solophp/validator": "^4.2"
