@@ -5,6 +5,19 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- solophp/logger 2.0. `LoggingServiceProvider` builds the logger with `Logger::file()`: the file still
+  rotates before it passes 5 MiB and keeps 5 archives, now under one lock that every process shares, and
+  the records keep the time of `APP_TIMEZONE`.
+- A log line carries microsecond times and its context as JSON. The error line of `ErrorMiddleware` reads
+  `GET /tasks: RuntimeException: Connection refused`, the exception's trace in the context.
+- Archives are named `app.log.<time>.<n>` instead of `app_<time>.log`; old archives are left alone, so
+  delete them yourself.
+- An unknown `LOG_LEVEL`, such as `WARNING` in capitals, throws instead of being accepted.
+
 ## [1.1.0] - 2026-10-29
 
 ### Added

@@ -10,6 +10,7 @@ use Solo\Application\Config;
 use Solo\Contracts\Container\WritableContainerInterface;
 use Solo\Dotenv\Dotenv;
 use Solo\Logger\Logger;
+use Solo\Logger\Rotation\RotationOptions;
 
 /**
  * A PSR-3 logger writing to one rotated file. Services ask for LoggerInterface,
@@ -22,14 +23,13 @@ final class LoggingServiceProvider
         $container->set(LoggerInterface::class, function (WritableContainerInterface $c) {
             $file = Dotenv::string('LOG_FILE', 'storage/logs/app.log');
 
-            $logger = new Logger(
-                logFile: str_starts_with($file, '/') ? $file : $c->get(Config::class)->basePath . '/' . $file,
-                maxFileSize: 5 * 1024 * 1024,
-                maxFiles: 5,
+            return Logger::file(
+                path: str_starts_with($file, '/') ? $file : $c->get(Config::class)->basePath . '/' . $file,
+                minLevel: Dotenv::string('LOG_LEVEL', LogLevel::WARNING),
+                rotation: new RotationOptions(maxBytes: 5 * 1024 * 1024, maxFiles: 5),
+                // Records carry the application's time; the logger itself defaults to UTC.
+                timezone: Dotenv::string('APP_TIMEZONE', 'UTC'),
             );
-            $logger->setMinLevel(Dotenv::string('LOG_LEVEL', LogLevel::WARNING));
-
-            return $logger;
         });
     }
 }
