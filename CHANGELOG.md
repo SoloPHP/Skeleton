@@ -5,7 +5,7 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.3.0] - 2026-11-01
 
 ### Changed
 
@@ -17,6 +17,14 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - A `#` starts a comment only after a space or a tab, and double quotes decode `\n`, `\t` and `\"`, so
   a Windows path belongs in single quotes. `DB_PORT` must be a decimal integer: `3306.0` falls back to
   the default port.
+
+### Upgrading from 1.2.0
+
+- `create-project` gives the new version. An existing copy needs `"solophp/dotenv": "^2.0"` in
+  `composer.json` and no code changes.
+- Before deploying, `php -r "require 'vendor/autoload.php'; Solo\Dotenv\Dotenv::read('.');"` checks that
+  `.env` and `.env.local` still parse: it prints nothing, or the file and line to fix. The
+  [dotenv upgrade guide](https://github.com/SoloPHP/Dotenv/blob/main/UPGRADING.md) lists every change.
 
 ## [1.2.0] - 2026-11-01
 
